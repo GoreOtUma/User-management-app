@@ -1,0 +1,33 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" nz-form [nzLayout]="'vertical'">
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Имя</nz-form-label>
+    <nz-form-control nzErrorTip="Введите имя">
+      <input nz-input formControlName="name" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzRequired]="true">Email</nz-form-label>
+    <nz-form-control [nzErrorTip]="'Введите корректный email'">
+      <input nz-input formControlName="email" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Телефон</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="phone" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label>Вебсайт</nz-form-label>
+    <nz-form-control>
+      <input nz-input formControlName="website" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <button nz-button nzType="primary" [disabled]="form.invalid">
+    {{ isEdit ? 'Сохранить изменения' : 'Создать пользователя' }}
+  </button>
+</form>
