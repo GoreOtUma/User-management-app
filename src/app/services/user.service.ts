@@ -30,20 +30,18 @@ export class UserService {
   }
 
   getUserById(id: number): Observable<User> {
-  return this.http.get<User>(`${this.apiUrl}/${id}`);
-}
+    return this.http.get<User>(`${this.apiUrl}/${id}`);
+  }
 
+  deleteUser(id: number) {
+    return this.http.delete(`${this.apiUrl}/${id}`);
+  }
 
-deleteUser(id: number) {
-  return this.http.delete(`https://jsonplaceholder.typicode.com/users/${id}`);
-}
+  updateUser(id: number, data: any) {
+    return this.http.put(`${this.apiUrl}/${id}`, data);
+  }
 
-updateUser(id: number, data: any) {
-  return this.http.put(`https://jsonplaceholder.typicode.com/users/${id}`, data);
-}
-
-createUser(data: any) {
-  return this.http.post(`https://jsonplaceholder.typicode.com/users`, data);
-}
-
+  createUser(data: Omit<User, 'id'>) {
+    return this.http.post<User>(this.apiUrl, data);
+  }
 }

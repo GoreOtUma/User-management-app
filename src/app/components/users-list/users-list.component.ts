@@ -30,38 +30,48 @@ export class UsersListComponent implements OnInit {
 
   constructor(private userService: UserService, private router: Router) {}
 
-onEdit(id: number): void {
-  this.router.navigate(['/user-form', id]);
-}
+  onEdit(id: number): void {
+    this.router.navigate(['/user-form', id]);
+  }
+
+
+  loading = false;
 
   ngOnInit(): void {
-    this.userService.getUsers().subscribe((users: User[]) => {
-      this.users = users;
-      this.filteredUsers = users;
+    this.loading = true;
+    this.userService.getUsers().subscribe({
+      next: (users: User[]) => {
+        this.users = users;
+        this.filteredUsers = users;
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        // Показать сообщение об ошибке
+      }
     });
   }
-
-onDelete(id: number): void {
-  if (confirm('Вы уверены, что хотите удалить пользователя?')) {
-    this.userService.deleteUser(id).subscribe(() => {
-      // Обновляем локальный список
-      this.filteredUsers = this.filteredUsers.filter(user => user.id !== id);
-      this.users = this.users.filter(user => user.id !== id);
-    });
+  onDelete(id: number): void {
+    if (confirm('Вы уверены, что хотите удалить пользователя?')) {
+      this.userService.deleteUser(id).subscribe(() => {
+        // Обновляем локальный список
+        this.filteredUsers = this.filteredUsers.filter(user => user.id !== id);
+        this.users = this.users.filter(user => user.id !== id);
+      });
+    }
   }
-}
 
-onSearch(): void {
-  const term = this.searchTerm.toLowerCase().trim();
-  this.filteredUsers = this.users.filter(
-    user =>
-      user.name.toLowerCase().includes(term) ||
-      user.email.toLowerCase().includes(term)
-  );
-}
+  onSearch(): void {
+    const term = this.searchTerm.toLowerCase().trim();
+    this.filteredUsers = this.users.filter(
+      user =>
+        user.name.toLowerCase().includes(term) ||
+        user.email.toLowerCase().includes(term)
+    );
+  }
 
-resetSearch(): void {
-  this.searchTerm = '';
-  this.filteredUsers = [...this.users];
-}
+  resetSearch(): void {
+    this.searchTerm = '';
+    this.filteredUsers = [...this.users];
+  }
 }

@@ -40,32 +40,17 @@ export class UserFormComponent implements OnInit {
       website: ['']
     });
 
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (id) {
-        this.isEdit = true;
-        this.userId = +id;
-        this.userService.getUserById(this.userId).subscribe((user: User) => {
-          this.form.patchValue(user);
-        });
-      }
-    });
-
-    const idParam = this.route.snapshot.paramMap.get('id');
-    if (idParam) {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
       this.isEdit = true;
-      this.userId = +idParam;
-      this.userService.getUserById(this.userId).subscribe((user: User) => {
-        this.form.patchValue({
-          name: user.name,
-          email: user.email
-        });
+      this.userId = +id;
+      this.userService.getUserById(this.userId).subscribe(user => {
+        this.form.patchValue(user);
       });
     }
   }
 
-
-onSubmit(): void {
+  onSubmit(): void {
     if (this.form.invalid) return;
 
     if (this.userId) {
@@ -80,5 +65,4 @@ onSubmit(): void {
       });
     }
   }
-
 }
