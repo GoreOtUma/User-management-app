@@ -1,4 +1,6 @@
 # User-management-app
+
+**GitHub Pages:** [GitHub Pages](https://goreotuma.github.io/User-management-app/)
 ## Основные функции
 📋 Просмотр списка пользователей с пагинацией
 
