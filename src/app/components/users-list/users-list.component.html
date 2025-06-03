@@ -4,6 +4,7 @@
   <button nz-button (click)="resetSearch()">Сбросить</button>
 </div>
 <nz-table
+  #userTable
   [nzData]="filteredUsers"
   [nzPageSize]="5"
   [nzFrontPagination]="true"
@@ -20,7 +21,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of filteredUsers">
+    <tr *ngFor="let user of userTable.data">
       <td>{{ user.name }}</td>
       <td>{{ user.email }}</td>
       <td>
